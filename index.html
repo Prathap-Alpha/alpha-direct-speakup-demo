@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Alpha Direct Speak-Up — Demo</title>
+<style>
+  :root{
+    --navy:#0D1B2A; --navy-2:#13283d; --orange:#F4A623; --orange-d:#d98e10;
+    --ink:#1b2430; --muted:#5d6b72; --line:#e3e7ec; --bg:#f6f8fa; --card:#fff;
+    --ok:#2e7d52; --serif:"Book Antiqua","Palatino Linotype",Palatino,Georgia,serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;font-size:17px}
+  h1,h2,h3,.brand-mark{font-family:var(--serif);color:var(--navy);line-height:1.2}
+  h1{font-size:2rem;margin:.2em 0 .4em}
+  a{color:var(--navy)}
+
+  .demobar{background:var(--orange);color:var(--navy);text-align:center;font-weight:700;
+    padding:8px 14px;font-size:.9rem;letter-spacing:.2px}
+  .demobar span{font-weight:400}
+
+  .topbar{display:flex;align-items:center;justify-content:space-between;background:var(--navy);
+    padding:14px 28px;flex-wrap:wrap;gap:10px}
+  .brand{display:flex;align-items:baseline;gap:10px;cursor:pointer}
+  .brand-mark{color:#fff;font-size:1.25rem;letter-spacing:1px;font-weight:700}
+  .brand-sub{color:var(--orange);font-family:var(--serif);font-size:1.15rem}
+  .chip{font-family:var(--sans);font-size:.62rem;letter-spacing:1px;background:#ffffff22;color:#dce3ea;
+    border:1px solid #ffffff33;border-radius:999px;padding:2px 8px;font-weight:700;align-self:center}
+  .topnav{display:flex;gap:8px;flex-wrap:wrap}
+  .topnav button{background:transparent;border:1px solid #ffffff22;color:#dce3ea;border-radius:8px;
+    padding:7px 13px;font:inherit;font-size:.9rem;cursor:pointer}
+  .topnav button:hover{color:#fff;border-color:#ffffff55}
+
+  .wrap{max-width:880px;margin:30px auto;padding:0 22px}
+  .lead{font-size:1.15rem;color:#33404e}
+  .muted{color:var(--muted);font-size:.92rem}
+  .hidden{display:none}
+
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;margin:22px 0}
+  .btn{display:inline-block;border-radius:9px;padding:12px 20px;font-weight:600;cursor:pointer;
+    border:2px solid transparent;font:inherit;font-size:1rem;text-decoration:none}
+  .btn-primary{background:var(--orange);color:var(--navy)}
+  .btn-primary:hover{background:var(--orange-d)}
+  .btn-ghost{background:transparent;border-color:#9fb0c1;color:var(--navy)}
+  .btn-ghost:hover{border-color:var(--navy)}
+  .btn-sm{padding:7px 13px;font-size:.85rem;border-radius:8px}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin:30px 0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px}
+  .card h3{margin:0 0 8px}
+  .note{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--orange);
+    border-radius:10px;padding:18px 22px;margin:24px 0}
+
+  label{font-weight:600;display:block;margin:16px 0 6px}
+  .hint{margin:0 0 8px;color:var(--muted);font-size:.9rem}
+  select,textarea,input[type=text]{font:inherit;padding:11px 12px;border:1px solid #c5ccd6;
+    border-radius:8px;background:#fff;width:100%}
+  textarea{resize:vertical}
+  .form{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:24px;margin:18px 0}
+  .form-narrow{max-width:480px}
+
+  .code-box{background:var(--navy);color:#fff;border-radius:12px;padding:22px 26px;margin:18px 0;text-align:center}
+  .code-label{margin:0;color:var(--orange);font-weight:600;letter-spacing:.5px}
+  .code-value{font-family:var(--serif);font-size:2rem;letter-spacing:2px;margin:8px 0;word-break:break-all}
+  .code-ref{margin:0;color:#9fb0c1}
+  .warn{background:#fff6e6;border:1px solid #f0d49a;border-radius:10px;padding:14px 18px;margin:14px 0;font-size:.95rem}
+
+  .case-head{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+  .thread{margin:18px 0;display:flex;flex-direction:column;gap:12px}
+  .msg{border-radius:12px;padding:14px 18px;max-width:85%}
+  .msg-reporter{background:#eef2f6;align-self:flex-start;border:1px solid var(--line)}
+  .msg-investigator{background:#fff6e6;align-self:flex-end;border:1px solid #f0d49a}
+  .msg-who{margin:0 0 4px;font-weight:700;font-size:.85rem;color:var(--navy)}
+  .msg-when{font-weight:400;color:var(--muted);margin-left:8px;font-size:.8rem}
+  .msg-body{margin:0;white-space:pre-wrap}
+
+  .pill{display:inline-block;padding:3px 12px;border-radius:999px;font-size:.78rem;font-weight:700;
+    letter-spacing:.3px;background:#e3e7ec;color:#3a4756}
+  .pill-new{background:#e3efff;color:#1c4f8a}
+  .pill-under_review{background:#fff0d4;color:#8a5b00}
+  .pill-info_requested{background:#ede0ff;color:#5b3a9e}
+  .pill-closed{background:#e2efe6;color:var(--ok)}
+
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin:6px 0 20px}
+  .stat{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .stat .n{font-family:var(--serif);font-size:1.7rem;color:var(--navy)}
+  .stat .l{font-size:.8rem;color:var(--muted)}
+
+  table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);
+    border-radius:12px;overflow:hidden;margin-top:8px}
+  th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);font-size:.95rem}
+  th{background:#eef2f6;font-family:var(--serif)}
+  tr:last-child td{border-bottom:none}
+  tbody tr{cursor:pointer}
+  tbody tr:hover{background:#f3f6f9}
+
+  .footer{border-top:4px solid var(--orange);background:var(--navy);color:#c9d3de;padding:20px 28px;
+    margin-top:46px;font-size:.85rem}
+  .footer strong{color:#fff}
+  .footer .ver{color:#8ea0b4;margin-top:6px}
+</style>
+</head>
+<body>
+<div class="demobar">⚠ DEMONSTRATION ENVIRONMENT — sample data only.
+  <span>This is not a live reporting channel. Nothing you type here is sent to anyone; it stays in this browser.</span>
+</div>
+
+<header class="topbar">
+  <div class="brand" onclick="go('home')">
+    <span class="brand-mark">ALPHA&nbsp;DIRECT</span>
+    <span class="brand-sub">Speak-Up</span>
+    <span class="chip" id="verchip">DEMO v1.0.0</span>
+  </div>
+  <nav class="topnav">
+    <button onclick="go('report')">Report a concern</button>
+    <button onclick="go('track')">Track a report</button>
+    <button onclick="go('console')">KPMG console</button>
+  </nav>
+</header>
+
+<main class="wrap">
+
+  <!-- HOME -->
+  <section id="view-home">
+    <h1>Speak up safely.</h1>
+    <p class="lead">Confidentially report fraud, mismanagement, harassment, abuse or any serious
+       concern at Alpha Direct. You can stay completely anonymous.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" onclick="go('report')">Report a concern</a>
+      <a class="btn btn-ghost" onclick="go('track')">I have a code — track my report</a>
+    </div>
+    <div class="cards">
+      <div class="card"><h3>Anonymous by design</h3>
+        <p>No login, no name, no email, no phone. No IP address recorded, no cookies when you report.</p></div>
+      <div class="card"><h3>Independently handled</h3>
+        <p>Reports go to <strong>KPMG</strong>, not to Alpha Direct management, so concerns about
+           anyone — at any level — can be raised freely.</p></div>
+      <div class="card"><h3>Two-way, still anonymous</h3>
+        <p>You get a one-time code. Use it to read KPMG's questions and answer them — without ever
+           revealing who you are.</p></div>
+    </div>
+    <div class="note">
+      <h3>For this demo</h3>
+      <p class="muted">Everything is simulated in your browser with sample data. Submit a test report to
+         see the receipt-code flow, or open the <a onclick="go('console')">KPMG console</a> to see how
+         investigators read and respond. Tip: on the Track page you can use the sample code
+         <strong>DEMO-1234</strong>.</p>
+    </div>
+  </section>
+
+  <!-- REPORT -->
+  <section id="view-report" class="hidden">
+    <h1>Report a concern</h1>
+    <p class="lead">Tell us what happened. Share as much or as little as you wish.</p>
+    <div class="form">
+      <label for="category">Type of concern</label>
+      <select id="category"></select>
+      <label for="body">What happened?</label>
+      <p class="hint">Demo only — your entry stays in this browser and is never transmitted.</p>
+      <textarea id="body" rows="8" placeholder="Describe the concern…"></textarea>
+      <div style="margin-top:18px"><a class="btn btn-primary" onclick="submitReport()">Submit report</a></div>
+    </div>
+  </section>
+
+  <!-- SUBMITTED -->
+  <section id="view-submitted" class="hidden">
+    <h1>Your report has been received.</h1>
+    <p class="lead">In the real system, KPMG would be notified now. No one at Alpha Direct can see who submitted this.</p>
+    <div class="code-box">
+      <p class="code-label">Your private receipt code — save it</p>
+      <p class="code-value" id="newcode">—</p>
+      <p class="code-ref" id="newref">—</p>
+    </div>
+    <div class="warn"><strong>This code is shown only once.</strong> It is the only way back to your report.
+      In the real system it cannot be recovered — that is what keeps you anonymous.</div>
+    <div class="cta-row">
+      <a class="btn btn-primary" onclick="go('track')">Track my report</a>
+      <a class="btn btn-ghost" onclick="go('home')">Done</a>
+    </div>
+  </section>
+
+  <!-- TRACK -->
+  <section id="view-track" class="hidden">
+    <h1>Track a report</h1>
+    <p class="lead">Enter the receipt code you were given. You'll see status, KPMG's questions, and can reply.</p>
+    <div class="form form-narrow">
+      <label for="trackcode">Receipt code</label>
+      <input id="trackcode" type="text" placeholder="e.g. DEMO-1234">
+      <div style="margin-top:16px"><a class="btn btn-primary" onclick="openTrack()">Open my report</a></div>
+      <p class="hint" id="trackmsg" style="margin-top:12px"></p>
+    </div>
+    <p class="muted">Demo tip: try <strong>DEMO-1234</strong>, or any code you got from submitting above.</p>
+  </section>
+
+  <!-- CASE (reporter) -->
+  <section id="view-case" class="hidden">
+    <div class="case-head"><h1>Your report</h1><span id="case-pill"></span></div>
+    <p class="muted" id="case-meta"></p>
+    <div class="thread" id="case-thread"></div>
+    <div class="form">
+      <label for="case-reply">Add information or answer a question</label>
+      <textarea id="case-reply" rows="4" placeholder="Type your message to KPMG…"></textarea>
+      <div style="margin-top:14px"><a class="btn btn-primary" onclick="reporterReply()">Send message</a></div>
+    </div>
+  </section>
+
+  <!-- CONSOLE (KPMG) -->
+  <section id="view-console" class="hidden">
+    <div class="case-head"><h1>KPMG console</h1><span class="pill">DEMO — sample cases</span></div>
+    <p class="muted">How an independent investigator sees the reports. Click a row to open it.</p>
+    <div class="stats">
+      <div class="stat"><div class="n">127</div><div class="l">Total reports</div></div>
+      <div class="stat"><div class="n">18</div><div class="l">Open</div></div>
+      <div class="stat"><div class="n">109</div><div class="l">Closed</div></div>
+      <div class="stat"><div class="n">2.3<span style="font-size:.9rem"> d</span></div><div class="l">Avg first response</div></div>
+      <div class="stat"><div class="n">14</div><div class="l">This month</div></div>
+    </div>
+    <table>
+      <thead><tr><th>Reference</th><th>Category</th><th>Status</th><th>Messages</th><th>Updated</th></tr></thead>
+      <tbody id="console-rows"></tbody>
+    </table>
+  </section>
+
+  <!-- CONSOLE CASE -->
+  <section id="view-acase" class="hidden">
+    <div class="case-head">
+      <h1 id="acase-ref"></h1>
+      <a class="btn btn-ghost btn-sm" onclick="go('console')">← All reports</a>
+    </div>
+    <p class="muted" id="acase-meta"></p>
+    <div class="thread" id="acase-thread"></div>
+    <div class="form">
+      <label for="acase-reply">Reply to the reporter</label>
+      <p class="hint">The reporter sees this when they return with their code. Never ask for their identity.</p>
+      <textarea id="acase-reply" rows="4"></textarea>
+      <div style="margin-top:14px"><a class="btn btn-primary" onclick="investigatorReply()">Send reply</a></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <p>Reports are received and handled independently by <strong>KPMG</strong> (fraud@kpmg.co.bw).
+     Alpha Direct cannot see who you are.</p>
+  <p class="ver" id="verline"></p>
+</footer>
+
+<script>
+"use strict";
+var VERSION = "v1.0.0";
+var BUILD = "2026.06.24";
+
+var CATEGORIES = [
+  "Fraud or financial misconduct","Theft or misuse of company assets","Bribery or corruption",
+  "Sexual harassment or abuse","Discrimination, bullying or harassment","Health & safety violation",
+  "Mismanagement or abuse of authority","Conflict of interest","Other serious concern"
+];
+
+// Seeded sample cases (fake). code -> case used by Track.
+var CASES = {
+  "DEMO-1234": {
+    ref:"ADSU-7F3A21", category:"Fraud or financial misconduct", status:"UNDER_REVIEW",
+    updated:"2026-06-22", msgs:[
+      {who:"reporter", t:"2026-06-20 09:14", b:"A procurement manager has been approving duplicate invoices to a vendor he appears to co-own. Same invoice numbers, two payments."},
+      {who:"KPMG", t:"2026-06-21 11:02", b:"Thank you for this. Can you share the approximate dates or any invoice numbers, without identifying yourself?"},
+      {who:"reporter", t:"2026-06-22 08:40", b:"Two of them were in May, both around BWP 80k. I can describe where to find them in the system."}
+    ]},
+  "DEMO-5678": {
+    ref:"ADSU-9C4B8E", category:"Sexual harassment or abuse", status:"INFO_REQUESTED",
+    updated:"2026-06-23", msgs:[
+      {who:"reporter", t:"2026-06-19 18:05", b:"A team lead repeatedly makes inappropriate comments to junior staff after hours. People are afraid to speak up."},
+      {who:"KPMG", t:"2026-06-23 10:20", b:"We take this very seriously and you are safe to report here. Are there specific dates or others who witnessed this? Only share what you are comfortable with."}
+    ]}
+};
+
+// Console list (includes the two trackable ones plus closed/new samples).
+var CONSOLE = [
+  {ref:"ADSU-9C4B8E", category:"Sexual harassment or abuse", status:"INFO_REQUESTED", n:2, updated:"2026-06-23"},
+  {ref:"ADSU-7F3A21", category:"Fraud or financial misconduct", status:"UNDER_REVIEW", n:3, updated:"2026-06-22"},
+  {ref:"ADSU-2D1170", category:"Bribery or corruption", status:"NEW", n:1, updated:"2026-06-22"},
+  {ref:"ADSU-A33C9D", category:"Mismanagement or abuse of authority", status:"UNDER_REVIEW", n:2, updated:"2026-06-18"},
+  {ref:"ADSU-5E66F0", category:"Health & safety violation", status:"CLOSED", n:4, updated:"2026-06-10"}
+];
+var CONSOLE_THREADS = {
+  "ADSU-2D1170":[{who:"reporter",t:"2026-06-22 07:11",b:"A broker offered cash to fast-track a motor claim. I have the WhatsApp messages."}],
+  "ADSU-A33C9D":[{who:"reporter",t:"2026-06-17 16:22",b:"Overtime approvals are being used to favour certain staff in one department."},
+                 {who:"KPMG",t:"2026-06-18 09:05",b:"Understood. Roughly how many people and over what period?"}],
+  "ADSU-5E66F0":[{who:"reporter",t:"2026-06-08 12:00",b:"The fire exit on the 2nd floor is blocked by stored equipment."},
+                 {who:"KPMG",t:"2026-06-09 08:30",b:"Thank you — escalated to facilities."},
+                 {who:"KPMG",t:"2026-06-10 15:40",b:"The exit has been cleared and a monthly check added. Closing this with thanks."},
+                 {who:"reporter",t:"2026-06-10 17:02",b:"Confirmed, it's clear now. Appreciated."}]
+};
+
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];});}
+function prettyStatus(s){return s.replace(/_/g," ");}
+function randCode(){
+  var a="ABCDEFGHJKLMNPQRSTUVWXYZ23456789", s="";
+  for(var i=0;i<10;i++){ s+=a[Math.floor(Math.random()*a.length)]; if(i===3||i===6) s+="-"; }
+  return s;
+}
+function randRef(){
+  var h="0123456789ABCDEF", s="ADSU-";
+  for(var i=0;i<6;i++) s+=h[Math.floor(Math.random()*h.length)];
+  return s;
+}
+
+var VIEWS=["home","report","submitted","track","case","console","acase"];
+function go(v){
+  VIEWS.forEach(function(x){document.getElementById("view-"+x).classList.add("hidden");});
+  document.getElementById("view-"+v).classList.remove("hidden");
+  if(location.hash!=="#"+v) history.replaceState(null,"","#"+v);
+  if(v==="console") renderConsole();
+  window.scrollTo(0,0);
+}
+
+var current=null;        // current reporter case being viewed
+var currentCode=null;
+var currentAdmin=null;   // current console case ref
+
+function submitReport(){
+  var cat=document.getElementById("category").value;
+  var body=document.getElementById("body").value.trim();
+  if(body.length<10){ alert("Please describe the concern in a little more detail (demo)."); return; }
+  var code=randCode(), ref=randRef();
+  CASES[code]={ref:ref, category:cat, status:"NEW", updated:BUILD,
+    msgs:[{who:"reporter", t:"just now", b:body}]};
+  document.getElementById("body").value="";
+  document.getElementById("newcode").textContent=code;
+  document.getElementById("newref").textContent="Reference: "+ref;
+  go("submitted");
+}
+
+function openTrack(){
+  var code=document.getElementById("trackcode").value.trim().toUpperCase();
+  var c=CASES[code];
+  if(!c){ document.getElementById("trackmsg").textContent="That code did not match any report. (Demo tip: try DEMO-1234)"; return; }
+  document.getElementById("trackmsg").textContent="";
+  current=c; currentCode=code;
+  renderReporterCase();
+  go("case");
+}
+
+function renderReporterCase(){
+  var c=current;
+  document.getElementById("case-pill").innerHTML='<span class="pill pill-'+c.status.toLowerCase()+'">'+prettyStatus(c.status)+'</span>';
+  document.getElementById("case-meta").textContent="Reference "+c.ref+" · "+c.category;
+  document.getElementById("case-thread").innerHTML=c.msgs.map(msgHtml).join("");
+}
+function msgHtml(m){
+  var who = m.who==="reporter" ? "You" : "KPMG";
+  var cls = m.who==="reporter" ? "msg-reporter" : "msg-investigator";
+  return '<div class="msg '+cls+'"><p class="msg-who">'+who+
+    '<span class="msg-when">'+esc(m.t)+'</span></p><p class="msg-body">'+esc(m.b)+'</p></div>';
+}
+function reporterReply(){
+  var t=document.getElementById("case-reply").value.trim();
+  if(!t) return;
+  current.msgs.push({who:"reporter", t:"just now", b:t});
+  document.getElementById("case-reply").value="";
+  renderReporterCase();
+}
+
+function renderConsole(){
+  document.getElementById("console-rows").innerHTML=CONSOLE.map(function(c){
+    return '<tr onclick="openAdmin(\''+c.ref+'\')"><td>'+c.ref+'</td><td>'+esc(c.category)+
+      '</td><td><span class="pill pill-'+c.status.toLowerCase()+'">'+prettyStatus(c.status)+
+      '</span></td><td>'+c.n+'</td><td>'+c.updated+'</td></tr>';
+  }).join("");
+}
+function adminThread(ref){
+  for(var k in CASES){ if(CASES[k].ref===ref) return CASES[k].msgs; }
+  return CONSOLE_THREADS[ref] || [{who:"reporter",t:"—",b:"(no messages in this sample)"}];
+}
+function openAdmin(ref){
+  currentAdmin=ref;
+  var meta=CONSOLE.filter(function(c){return c.ref===ref;})[0]||{category:"",status:"NEW"};
+  document.getElementById("acase-ref").textContent=ref;
+  document.getElementById("acase-meta").innerHTML=esc(meta.category)+
+    ' · <span class="pill pill-'+meta.status.toLowerCase()+'">'+prettyStatus(meta.status)+'</span>';
+  document.getElementById("acase-thread").innerHTML=adminThread(ref).map(msgHtml).join("");
+  go("acase");
+}
+function investigatorReply(){
+  var t=document.getElementById("acase-reply").value.trim();
+  if(!t) return;
+  adminThread(currentAdmin).push({who:"KPMG", t:"just now", b:t});
+  document.getElementById("acase-reply").value="";
+  openAdmin(currentAdmin);
+}
+
+// init
+(function(){
+  var sel=document.getElementById("category");
+  CATEGORIES.forEach(function(c){var o=document.createElement("option");o.value=c;o.textContent=c;sel.appendChild(o);});
+  document.getElementById("verchip").textContent="DEMO "+VERSION;
+  document.getElementById("verline").textContent="Alpha Direct Speak-Up — demonstration build "+VERSION+" · "+BUILD+" · sample data only";
+  var start=(location.hash||"#home").slice(1);
+  go(VIEWS.indexOf(start)>-1 ? start : "home");
+})();
+</script>
+</body>
+</html>
