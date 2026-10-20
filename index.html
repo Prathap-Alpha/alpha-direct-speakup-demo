@@ -117,7 +117,7 @@
   <nav class="topnav">
     <button onclick="go('report')">Report a concern</button>
     <button onclick="go('track')">Track a report</button>
-    <button onclick="go('console')">KPMG console</button>
+    <button onclick="go('console')">Brown &amp; Co console</button>
   </nav>
 </header>
 
@@ -136,16 +136,16 @@
       <div class="card"><h3>Anonymous by design</h3>
         <p>No login, no name, no email, no phone. No IP address recorded, no cookies when you report.</p></div>
       <div class="card"><h3>Independently handled</h3>
-        <p>Reports go to <strong>KPMG</strong>, not to Alpha Direct management, so concerns about
+        <p>Reports go to <strong>Brown &amp; Co</strong>, not to Alpha Direct management, so concerns about
            anyone — at any level — can be raised freely.</p></div>
       <div class="card"><h3>Two-way, still anonymous</h3>
-        <p>You get a one-time code. Use it to read KPMG's questions and answer them — without ever
+        <p>You get a one-time code. Use it to read Brown &amp; Co's questions and answer them — without ever
            revealing who you are.</p></div>
     </div>
     <div class="note">
       <h3>For this demo</h3>
       <p class="muted">Everything is simulated in your browser with sample data. Submit a test report to
-         see the receipt-code flow, or open the <a onclick="go('console')">KPMG console</a> to see how
+         see the receipt-code flow, or open the <a onclick="go('console')">Brown &amp; Co console</a> to see how
          investigators read and respond. Tip: on the Track page you can use the sample code
          <strong>DEMO-1234</strong>.</p>
     </div>
@@ -168,7 +168,7 @@
   <!-- SUBMITTED -->
   <section id="view-submitted" class="hidden">
     <h1>Your report has been received.</h1>
-    <p class="lead">In the real system, KPMG would be notified now. No one at Alpha Direct can see who submitted this.</p>
+    <p class="lead">In the real system, Brown &amp; Co would be notified now. No one at Alpha Direct can see who submitted this.</p>
     <div class="code-box">
       <p class="code-label">Your private receipt code — save it</p>
       <p class="code-value" id="newcode">—</p>
@@ -185,7 +185,7 @@
   <!-- TRACK -->
   <section id="view-track" class="hidden">
     <h1>Track a report</h1>
-    <p class="lead">Enter the receipt code you were given. You'll see status, KPMG's questions, and can reply.</p>
+    <p class="lead">Enter the receipt code you were given. You'll see status, Brown &amp; Co's questions, and can reply.</p>
     <div class="form form-narrow">
       <label for="trackcode">Receipt code</label>
       <input id="trackcode" type="text" placeholder="e.g. DEMO-1234">
@@ -202,14 +202,14 @@
     <div class="thread" id="case-thread"></div>
     <div class="form">
       <label for="case-reply">Add information or answer a question</label>
-      <textarea id="case-reply" rows="4" placeholder="Type your message to KPMG…"></textarea>
+      <textarea id="case-reply" rows="4" placeholder="Type your message to Brown & Co…"></textarea>
       <div style="margin-top:14px"><a class="btn btn-primary" onclick="reporterReply()">Send message</a></div>
     </div>
   </section>
 
-  <!-- CONSOLE (KPMG) -->
+  <!-- CONSOLE (Brown &amp; Co) -->
   <section id="view-console" class="hidden">
-    <div class="case-head"><h1>KPMG console</h1><span class="pill">DEMO — sample cases</span></div>
+    <div class="case-head"><h1>Brown &amp; Co console</h1><span class="pill">DEMO — sample cases</span></div>
     <p class="muted">How an independent investigator sees the reports. Click a row to open it.</p>
     <div class="stats">
       <div class="stat"><div class="n">127</div><div class="l">Total reports</div></div>
@@ -243,7 +243,7 @@
 </main>
 
 <footer class="footer">
-  <p>Reports are received and handled independently by <strong>KPMG</strong> (fraud@kpmg.co.bw).
+  <p>Reports are received and handled independently by <strong>Brown &amp; Co</strong>.
      Alpha Direct cannot see who you are.</p>
   <p class="ver" id="verline"></p>
 </footer>
@@ -265,14 +265,14 @@ var CASES = {
     ref:"ADSU-7F3A21", category:"Fraud or financial misconduct", status:"UNDER_REVIEW",
     updated:"2026-06-22", msgs:[
       {who:"reporter", t:"2026-06-20 09:14", b:"A procurement manager has been approving duplicate invoices to a vendor he appears to co-own. Same invoice numbers, two payments."},
-      {who:"KPMG", t:"2026-06-21 11:02", b:"Thank you for this. Can you share the approximate dates or any invoice numbers, without identifying yourself?"},
+      {who:"Brown & Co", t:"2026-06-21 11:02", b:"Thank you for this. Can you share the approximate dates or any invoice numbers, without identifying yourself?"},
       {who:"reporter", t:"2026-06-22 08:40", b:"Two of them were in May, both around BWP 80k. I can describe where to find them in the system."}
     ]},
   "DEMO-5678": {
     ref:"ADSU-9C4B8E", category:"Sexual harassment or abuse", status:"INFO_REQUESTED",
     updated:"2026-06-23", msgs:[
       {who:"reporter", t:"2026-06-19 18:05", b:"A team lead repeatedly makes inappropriate comments to junior staff after hours. People are afraid to speak up."},
-      {who:"KPMG", t:"2026-06-23 10:20", b:"We take this very seriously and you are safe to report here. Are there specific dates or others who witnessed this? Only share what you are comfortable with."}
+      {who:"Brown & Co", t:"2026-06-23 10:20", b:"We take this very seriously and you are safe to report here. Are there specific dates or others who witnessed this? Only share what you are comfortable with."}
     ]}
 };
 
@@ -287,10 +287,10 @@ var CONSOLE = [
 var CONSOLE_THREADS = {
   "ADSU-2D1170":[{who:"reporter",t:"2026-06-22 07:11",b:"A broker offered cash to fast-track a motor claim. I have the WhatsApp messages."}],
   "ADSU-A33C9D":[{who:"reporter",t:"2026-06-17 16:22",b:"Overtime approvals are being used to favour certain staff in one department."},
-                 {who:"KPMG",t:"2026-06-18 09:05",b:"Understood. Roughly how many people and over what period?"}],
+                 {who:"Brown & Co",t:"2026-06-18 09:05",b:"Understood. Roughly how many people and over what period?"}],
   "ADSU-5E66F0":[{who:"reporter",t:"2026-06-08 12:00",b:"The fire exit on the 2nd floor is blocked by stored equipment."},
-                 {who:"KPMG",t:"2026-06-09 08:30",b:"Thank you — escalated to facilities."},
-                 {who:"KPMG",t:"2026-06-10 15:40",b:"The exit has been cleared and a monthly check added. Closing this with thanks."},
+                 {who:"Brown & Co",t:"2026-06-09 08:30",b:"Thank you — escalated to facilities."},
+                 {who:"Brown & Co",t:"2026-06-10 15:40",b:"The exit has been cleared and a monthly check added. Closing this with thanks."},
                  {who:"reporter",t:"2026-06-10 17:02",b:"Confirmed, it's clear now. Appreciated."}]
 };
 
@@ -351,7 +351,7 @@ function renderReporterCase(){
   document.getElementById("case-thread").innerHTML=c.msgs.map(msgHtml).join("");
 }
 function msgHtml(m){
-  var who = m.who==="reporter" ? "You" : "KPMG";
+  var who = m.who==="reporter" ? "You" : "Brown & Co";
   var cls = m.who==="reporter" ? "msg-reporter" : "msg-investigator";
   return '<div class="msg '+cls+'"><p class="msg-who">'+who+
     '<span class="msg-when">'+esc(m.t)+'</span></p><p class="msg-body">'+esc(m.b)+'</p></div>';
@@ -387,7 +387,7 @@ function openAdmin(ref){
 function investigatorReply(){
   var t=document.getElementById("acase-reply").value.trim();
   if(!t) return;
-  adminThread(currentAdmin).push({who:"KPMG", t:"just now", b:t});
+  adminThread(currentAdmin).push({who:"Brown & Co", t:"just now", b:t});
   document.getElementById("acase-reply").value="";
   openAdmin(currentAdmin);
 }

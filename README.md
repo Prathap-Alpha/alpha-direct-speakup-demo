@@ -9,14 +9,14 @@ no backend, no database, no real data.
 > ⚠️ **This is a demonstration only.** It is **not** a live reporting channel.
 > Nothing typed into it is transmitted or stored anywhere — it lives only in the
 > current browser tab. The real Speak-Up system (with genuine anonymity, encryption
-> and KPMG routing) is a separate, **private** application.
+> and Brown & Co routing) is a separate, **private** application.
 
 ## What it shows
 
 - The anonymous **report** form and the one-time **receipt code** a reporter receives.
-- **Tracking** a report and the **two-way, anonymous** conversation with KPMG
+- **Tracking** a report and the **two-way, anonymous** conversation with Brown & Co
   (try the sample code `DEMO-1234`).
-- The **KPMG console**: how an independent investigator sees sample cases, statuses
+- The **Brown & Co console**: how an independent investigator sees sample cases, statuses
   and stats, and replies to a reporter.
 
 Everything is seeded with fake sample cases. A version/build number is shown in the
